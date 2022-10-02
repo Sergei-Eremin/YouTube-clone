@@ -14,7 +14,8 @@ module.exports = {
         'airbnb-typescript/base',
         // 'prettier/@typescript-eslint',
         'plugin:prettier/recommended',
-        "plugin:import/recommended"
+        'plugin:import/recommended',
+        'plugin:import/typescript',
       ],
       rules: {
         '@angular-eslint/directive-selector': [
@@ -33,7 +34,15 @@ module.exports = {
             style: 'kebab-case',
           },
         ],
-        'import/named': 0
+        'import/named': 0,
+      },
+      settings: {
+        'import/resolver': {
+          node: {
+            extensions: ['.js', '.jsx', '.ts', '.tsx'],
+          },
+          "typescript": {}
+        },
       },
     },
     {
