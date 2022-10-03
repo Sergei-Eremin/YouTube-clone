@@ -3,22 +3,21 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ListCardsComponent } from './list-cards/list-cards.component';
-import { CardComponent } from './card/card.component';
-import { HeaderComponent } from './header/header.component';
-import { SortingComponent } from './sorting/sorting.component';
-import { ProfileComponent } from './profile/profile.component';
+import { NotFoundModule } from './pages/not-found/not-found.module';
+import { CardPageModule } from './pages/card-page/card-page.module';
+import { MainPageModule } from './pages/main-page/main-page.module';
+import { HeaderModule } from './components/header/header.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ListCardsComponent,
-    CardComponent,
-    HeaderComponent,
-    SortingComponent,
-    ProfileComponent,
+  declarations: [AppComponent],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    NotFoundModule,
+    CardPageModule,
+    MainPageModule,
+    HeaderModule,
   ],
-  imports: [BrowserModule, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent],
 })

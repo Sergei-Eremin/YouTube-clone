@@ -1,4 +1,4 @@
-export interface IbaseResponse {
+export interface IBaseResponse {
   kind: string;
   etag: string;
   pageInfo: {

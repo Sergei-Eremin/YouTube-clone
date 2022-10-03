@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'YouTube-client-app';
+
+  lol = 'rrr';
+
+  myClass: object = { foo: true, bar: false };
 }
