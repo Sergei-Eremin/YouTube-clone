@@ -1,0 +1,34 @@
+.sorting-component {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .title {
+    color: #929292;
+    font-size: 12px;
+    line-height: 14px;
+    margin-right: 10px;
+  }
+
+  .choice {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    color: #2f80ed;
+    font-size: 12px;
+    line-height: 14px;
+    &:nth-child(3) {
+      margin: 0 24px;
+    }
+  }
+
+  input[type='text'] {
+    padding: 5px;
+    height: 14px;
+    font-size: 12px;
+    outline: none;
+    border: none;
+    background-color: #fff;
+    margin-left: 10px;
+  }
+}

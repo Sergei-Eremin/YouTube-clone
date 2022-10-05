@@ -1,15 +1,29 @@
 .wrap {
   &__container {
   }
-}
 
-.content {
-  display: flex;
-
-  &__search {
+  .logo {
+    display: block;
+    width: 50px;
+  }
+  .content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .search {
+    max-width: 570px;
     width: 100%;
+    margin: 15px auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
 
-  &__profile {
+  .profile {
+  }
+  .sorting {
+    padding: 18px 0;
+    width: 100%;
   }
 }

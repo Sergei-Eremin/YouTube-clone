@@ -1,4 +1,23 @@
-<p>
-  card works!
-  {{ data }}
-</p>
+<!-- {{ data }} -->
+<img class="preview" src="{{ img }}" alt="preview-img" />
+<div class="info">
+  <div class="views">
+    <img src="" alt="icon" class="icon" />
+    <div class="count">{{ views }}</div>
+  </div>
+  <div class="likes">
+    <img src="" alt="icon" class="icon" />
+    <div class="count">{{ likes }}</div>
+  </div>
+  <div class="dislikes">
+    <img src="" alt="icon" class="icon" />
+    <div class="count">{{ dislikes }}</div>
+  </div>
+  <div class="share">
+    <img src="" alt="icon" class="icon" />
+    <div class="count">{{ share }}</div>
+  </div>
+</div>
+<div class="title">{{ title }}</div>
+<button class="more">more...</button>
+<div class="bottom"></div>
