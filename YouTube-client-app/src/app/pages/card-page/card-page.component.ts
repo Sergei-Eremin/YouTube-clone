@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IBaseResponse } from 'src/@types/responseInterfaces';
 
 @Component({
   templateUrl: './card-page.component.html',

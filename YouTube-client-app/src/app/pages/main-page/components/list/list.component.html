@@ -1,11 +1,14 @@
 <div class="list">
   <app-card
-    *ngFor="let card of cards"
-    [img]="card.img"
-    [title]="card.title"
-    [views]="card.views"
-    [likes]="card.likes"
-    [dislikes]="card.dislikes"
-    [share]="card.share"
+    *ngFor="let item of items"
+    [url]="item.snippet.thumbnails.high.url"
+    [viewCount]="item.statistics.viewCount"
+    [likeCount]="item.statistics.likeCount"
+    [dislikeCount]="item.statistics.dislikeCount"
+    [commentCount]="item.statistics.commentCount"
+    [title]="item.snippet.title"
+    [publishDate]="item.snippet.publishedAt"
   ></app-card>
 </div>
+
+<!--  | date: 'short' -->

@@ -1,23 +1,22 @@
-<!-- {{ data }} -->
-<img class="preview" src="{{ img }}" alt="preview-img" />
+<img class="preview" src="" [src]="url" alt="preview-img" />
 <div class="info">
   <div class="views">
     <img src="" alt="icon" class="icon" />
-    <div class="count">{{ views }}</div>
+    <div class="count">{{ viewCount }}</div>
   </div>
   <div class="likes">
     <img src="" alt="icon" class="icon" />
-    <div class="count">{{ likes }}</div>
+    <div class="count">{{ likeCount }}</div>
   </div>
   <div class="dislikes">
     <img src="" alt="icon" class="icon" />
-    <div class="count">{{ dislikes }}</div>
+    <div class="count">{{ dislikeCount }}</div>
   </div>
   <div class="share">
     <img src="" alt="icon" class="icon" />
-    <div class="count">{{ share }}</div>
+    <div class="count">{{ commentCount }}</div>
   </div>
 </div>
 <div class="title">{{ title }}</div>
 <button class="more">more...</button>
-<div class="bottom"></div>
+<div class="bottom" [appPublicationDate]="publishDate"></div>
