@@ -18,5 +18,5 @@
   </div>
 </div>
 <div class="title">{{ title }}</div>
-<button class="more">more...</button>
+<button [routerLink]="['/card', id]" class="more">more...</button>
 <div class="bottom" [appPublicationDate]="publishDate"></div>

@@ -1,1 +1,42 @@
-<div>card-page</div>
+<a class="prev"
+  ><svg width="17" height="20" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16 2L3 10.2162L16 18" stroke="#F2F2F2" stroke-width="3" />
+  </svg>
+</a>
+<picture class="picture">
+  <source media="(min-width: )" srcset="" />
+  <img [src]="image" alt="card-picture" />
+</picture>
+<div class="details">
+  <header class="details__head">
+    <h3 class="details__heading">{{ title }}</h3>
+    <div class="date">{{ date }}</div>
+  </header>
+  <div class="description">
+    <div class="description__heading">Description:</div>
+    <p class="description__text">
+      {{ description }}
+    </p>
+  </div>
+
+  <div class="info">
+    <div class="views">
+      <img src="" alt="icon" class="icon" />
+      <div class="count">{{ viewCount }}</div>
+    </div>
+    <div class="likes">
+      <img src="" alt="icon" class="icon" />
+      <div class="count">{{ likeCount }}</div>
+    </div>
+    <div class="dislikes">
+      <img src="" alt="icon" class="icon" />
+      <div class="count">{{ dislikeCount }}</div>
+    </div>
+    <div class="share">
+      <img src="" alt="icon" class="icon" />
+      <div class="count">{{ commentCount }}</div>
+    </div>
+  </div>
+
+  <!-- <div class="bottom" [appPublicationDate]="publishDate"></div> -->
+</div>

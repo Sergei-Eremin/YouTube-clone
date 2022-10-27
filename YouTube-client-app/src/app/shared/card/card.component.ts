@@ -22,6 +22,8 @@ export class CardComponent implements OnInit {
 
   @Input() title!: string;
 
+  @Input() id!: string;
+
   bottomColor: EDateStatus = EDateStatus.low;
 
   constructor() {}

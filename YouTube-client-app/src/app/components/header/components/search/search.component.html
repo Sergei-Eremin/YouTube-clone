@@ -1,7 +1,7 @@
-<form action="" class="search">
-  <input type="text" name="" id="" />
-  <button type="submit">search</button>
-  <button class="setting">
+<div class="search">
+  <input (change)="onValueChange($event)" (keyup.enter)="onSubmit()" type="text" name="" id="" />
+  <button (click)="onSubmit()" type="submit">search</button>
+  <div class="setting" (click)="onSettingClick()">
     <img src="/assets/icons/setting.svg" alt="" />
-  </button>
-</form>
+  </div>
+</div>

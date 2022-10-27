@@ -8,13 +8,10 @@ import { EDateStatus } from './card.enums';
 export class PublicationDateDirective implements OnInit {
   @Input() appPublicationDate!: string;
 
-  constructor(private el: ElementRef) {
-    console.log(this);
-  }
+  constructor(private el: ElementRef) {}
 
   ngOnInit() {
     const diff = differenceInWeeks(new Date(), new Date(this.appPublicationDate));
-    console.log(diff);
 
     if (diff < 1) {
       this.el.nativeElement.style.backgroundColor = EDateStatus.low;

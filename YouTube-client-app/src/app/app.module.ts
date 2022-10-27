@@ -7,6 +7,7 @@ import { NotFoundModule } from './pages/not-found/not-found.module';
 import { CardPageModule } from './pages/card-page/card-page.module';
 import { MainPageModule } from './pages/main-page/main-page.module';
 import { HeaderModule } from './components/header/header.module';
+import { DataRequestService } from './services/data-request.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,7 +19,7 @@ import { HeaderModule } from './components/header/header.module';
     MainPageModule,
     HeaderModule,
   ],
-  providers: [],
+  providers: [DataRequestService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
