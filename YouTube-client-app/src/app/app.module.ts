@@ -8,6 +8,7 @@ import { CardPageModule } from './pages/card-page/card-page.module';
 import { MainPageModule } from './pages/main-page/main-page.module';
 import { HeaderModule } from './components/header/header.module';
 import { DataRequestService } from './services/data-request.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +19,7 @@ import { DataRequestService } from './services/data-request.service';
     CardPageModule,
     MainPageModule,
     HeaderModule,
+    HttpClientModule,
   ],
   providers: [DataRequestService],
   bootstrap: [AppComponent],

@@ -3,7 +3,7 @@ import { ResponseItem } from 'src/@types/responseInterfaces';
 import { DataRequestService } from 'src/app/services/data-request.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { format, formatDistance, formatRelative, subDays } from 'date-fns';
+import { format } from 'date-fns';
 
 @Component({
   templateUrl: './card-page.component.html',

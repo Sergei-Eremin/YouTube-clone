@@ -9,24 +9,24 @@ const routes: Routes = [
     path: '',
     redirectTo: 'main',
     pathMatch: 'full',
-    title: 'главная',
+    title: 'Главная',
   },
   {
     path: 'main',
     component: MainPageComponent,
-    title: 'главная',
+    title: 'Главная',
   },
   {
     path: 'card/:id',
     component: CardPageComponent,
-    title: 'йопта карточка',
+    title: 'Карточка товара',
   },
   {
     path: '404',
     component: NotFoundComponent,
-    title: 'не найдено',
+    title: 'not found',
   },
-  { path: '**', redirectTo: '404', title: 'не найдено' },
+  { path: '**', redirectTo: '404', title: 'not found' },
 ];
 
 @NgModule({
