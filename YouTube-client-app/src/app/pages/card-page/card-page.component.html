@@ -20,20 +20,20 @@
   </div>
 
   <div class="info">
-    <div class="views">
-      <img src="" alt="icon" class="icon" />
+    <div class="info__item views">
+      <svg-icon src="assets/icons/viewed.svg" [svgStyle]="{ 'width.px': 20 }"></svg-icon>
       <div class="count">{{ viewCount }}</div>
     </div>
-    <div class="likes">
-      <img src="" alt="icon" class="icon" />
+    <div class="info__item likes">
+      <svg-icon src="assets/icons/liked.svg" [svgStyle]="{ 'width.px': 20 }"></svg-icon>
       <div class="count">{{ likeCount }}</div>
     </div>
-    <div class="dislikes">
-      <img src="" alt="icon" class="icon" />
+    <div class="info__item dislikes">
+      <svg-icon src="assets/icons/dislike.svg" [svgStyle]="{ 'width.px': 20 }"></svg-icon>
       <div class="count">{{ dislikeCount }}</div>
     </div>
-    <div class="share">
-      <img src="" alt="icon" class="icon" />
+    <div class="info__item share">
+      <svg-icon src="assets/icons/share.svg" [svgStyle]="{ 'width.px': 20 }"></svg-icon>
       <div class="count">{{ commentCount }}</div>
     </div>
   </div>
