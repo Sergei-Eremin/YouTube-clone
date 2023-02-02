@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CardPageComponent } from './pages/card-page/card-page.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { MainPageComponent } from './pages/main-page/main-page.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 
@@ -15,6 +16,11 @@ const routes: Routes = [
     path: 'main',
     component: MainPageComponent,
     title: 'Главная',
+  },
+  {
+    path: 'login',
+    component: LoginPageComponent,
+    title: 'Регистрация',
   },
   {
     path: 'card/:id',

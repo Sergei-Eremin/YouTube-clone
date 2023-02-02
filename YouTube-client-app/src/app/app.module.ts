@@ -10,6 +10,8 @@ import { HeaderModule } from './components/header/header.module';
 import { DataRequestService } from './services/data-request.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { FormsModule } from '@angular/forms';
+import { LoginPageModule } from './pages/login-page/login-page.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,9 +21,11 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
     NotFoundModule,
     CardPageModule,
     MainPageModule,
+    FormsModule,
     HeaderModule,
     HttpClientModule,
     AngularSvgIconModule.forRoot(),
+    LoginPageModule,
   ],
   providers: [DataRequestService],
   bootstrap: [AppComponent],

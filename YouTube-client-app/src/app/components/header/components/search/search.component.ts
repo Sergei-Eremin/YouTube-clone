@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { SearchService } from 'src/app/services/search.service';
 import { DataRequestService } from 'src/app/services/data-request.service';
 import { ResponseItem } from 'src/@types/responseInterfaces';
+import { YouTubeApiService } from 'src/app/services/you-tube-api.service';
 
 @Component({
   selector: 'app-search',
@@ -13,7 +14,11 @@ export class SearchComponent implements OnInit {
 
   comingCards: ResponseItem[] = [];
 
-  constructor(private _searchService: SearchService, private _dataRequest: DataRequestService) {}
+  constructor(
+    private _searchService: SearchService,
+    private _dataRequest: DataRequestService,
+    private _youTube: YouTubeApiService,
+  ) {}
 
   onSettingClick() {
     this.settingClick.emit();
