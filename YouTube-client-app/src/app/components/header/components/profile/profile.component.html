@@ -1,1 +1,2 @@
-<a routerLinkActive="active">Your Name <img src="/assets/icons/profile.svg" alt="#" /></a>
+<a routerLinkActive="active">{{ userName }} <img src="/assets/icons/profile.svg" alt="#" /></a>
+<button type="button" *ngIf="showLogOut" (click)="logOut()" routerLink="/login">logOut</button>

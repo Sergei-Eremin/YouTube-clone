@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginGuard } from './guards/login.guard';
 import { CardPageComponent } from './pages/card-page/card-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { MainPageComponent } from './pages/main-page/main-page.component';
@@ -16,6 +17,7 @@ const routes: Routes = [
     path: 'main',
     component: MainPageComponent,
     title: 'Главная',
+    canActivate: [LoginGuard],
   },
   {
     path: 'login',
@@ -26,11 +28,13 @@ const routes: Routes = [
     path: 'card/:id',
     component: CardPageComponent,
     title: 'Карточка товара',
+    canActivate: [LoginGuard],
   },
   {
     path: '404',
     component: NotFoundComponent,
     title: 'not found',
+    canActivate: [LoginGuard],
   },
   { path: '**', redirectTo: '404', title: 'not found' },
 ];

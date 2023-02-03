@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-profile',
@@ -6,7 +7,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-  constructor() {}
+  constructor(private _login: LoginService) {}
 
-  ngOnInit(): void {}
+  userName = 'Your Name';
+
+  showLogOut = false;
+
+  ngOnInit(): void {
+    const newName = this._login.getToken();
+    if (newName) {
+      this.userName = newName;
+    }
+
+    if (newName) {
+      this.showLogOut = true;
+    }
+  }
+
+  logOut() {
+    this._login.deleteToken();
+    console.log(localStorage);
+  }
 }

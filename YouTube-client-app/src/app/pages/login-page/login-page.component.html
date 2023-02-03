@@ -1,15 +1,15 @@
-<div class="login">
+<form class="login" [formGroup]="loginForm" (ngSubmit)="login()">
   <h2>Login</h2>
   <label class="field">
     <p>login</p>
-    <input type="text" />
+    <input id="login-field" formControlName="login" type="text" />
   </label>
   <label class="field">
     <p>password</p>
-    <input type="text" />
+    <input id="password-field" formControlName="password" type="text" />
   </label>
   <div class="bottom">
-    <a href="#" class="registration">Registration</a>
-    <button type="submit">Login</button>
+    <a class="registration">Registration</a>
+    <button type="submit" routerLink="/main">Login</button>
   </div>
-</div>
+</form>
