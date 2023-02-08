@@ -3,7 +3,7 @@ import { SearchService } from 'src/app/services/search.service';
 import { DataRequestService } from 'src/app/services/data-request.service';
 import { ResponseItem } from 'src/@types/responseInterfaces';
 import { YouTubeApiService } from 'src/app/services/you-tube-api.service';
-import { debounce, distinctUntilChanged, filter, fromEvent, interval, map } from 'rxjs';
+import debounce from 'lodash/debounce';
 
 @Component({
   selector: 'app-search',
@@ -29,12 +29,15 @@ export class SearchComponent implements OnInit {
     this.settingClick.emit();
   }
 
-  onSubmit(event: Event) {
+  private _onSubmit(event: Event) {
+    console.log('onSubmit', event);
     const Elem = event.target as HTMLInputElement;
     this._searchService.value = (event.target as HTMLInputElement).value;
     if (Elem.value.length <= 2) return;
     this._searchService.search(this.comingCards);
   }
+
+  debouncedOnSubmit = debounce(this._onSubmit.bind(this), 800);
 
   ngOnInit(): void {
     this._dataRequest.requestCards().subscribe({
@@ -46,18 +49,18 @@ export class SearchComponent implements OnInit {
       },
     });
 
-    const searchInput = document.querySelector('.search-input') as HTMLInputElement;
-    this._search$ = fromEvent(searchInput, 'input')
-      .pipe(
-        map((event: Event) => (event.target as HTMLInputElement).value),
-        filter((targetValue: string) => targetValue.length >= this.minlength),
-        debounce(() => interval(800)),
-        distinctUntilChanged(),
-      )
-      .subscribe({
-        next: (res) => {
-          console.log(res);
-        },
-      });
+    // this._search$ = fromEvent(searchInput, 'input')
+    //   .pipe(
+    //     map((event: Event) => (event.target as HTMLInputElement).value),
+    //     filter((targetValue: string) => targetValue.length >= this.minlength),
+    //     debounce(() => interval(800)),
+    //     distinctUntilChanged(),
+    //   )
+    //   .subscribe({
+    //     next: (res) => {
+    //       console.log(res);
+    //       // this.onSubmit()
+    //     },
+    //   });
   }
 }
