@@ -3,6 +3,7 @@ import { SearchService } from 'src/app/services/search.service';
 import { DataRequestService } from 'src/app/services/data-request.service';
 import { ResponseItem } from 'src/@types/responseInterfaces';
 import { YouTubeApiService } from 'src/app/services/you-tube-api.service';
+import { debounce, distinctUntilChanged, filter, fromEvent, interval, map } from 'rxjs';
 
 @Component({
   selector: 'app-search',
@@ -14,6 +15,10 @@ export class SearchComponent implements OnInit {
 
   comingCards: ResponseItem[] = [];
 
+  private _search$: any;
+
+  minlength = 3;
+
   constructor(
     private _searchService: SearchService,
     private _dataRequest: DataRequestService,
@@ -24,12 +29,11 @@ export class SearchComponent implements OnInit {
     this.settingClick.emit();
   }
 
-  onSubmit() {
-    this._searchService.search(this.comingCards);
-  }
-
-  onValueChange(event: Event) {
+  onSubmit(event: Event) {
+    const Elem = event.target as HTMLInputElement;
     this._searchService.value = (event.target as HTMLInputElement).value;
+    if (Elem.value.length <= 2) return;
+    this._searchService.search(this.comingCards);
   }
 
   ngOnInit(): void {
@@ -41,5 +45,19 @@ export class SearchComponent implements OnInit {
         console.error('error', err);
       },
     });
+
+    const searchInput = document.querySelector('.search-input') as HTMLInputElement;
+    this._search$ = fromEvent(searchInput, 'input')
+      .pipe(
+        map((event: Event) => (event.target as HTMLInputElement).value),
+        filter((targetValue: string) => targetValue.length >= this.minlength),
+        debounce(() => interval(800)),
+        distinctUntilChanged(),
+      )
+      .subscribe({
+        next: (res) => {
+          console.log(res);
+        },
+      });
   }
 }
