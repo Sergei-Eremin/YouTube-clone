@@ -1,21 +1,31 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+} from '@angular/core';
 import { SearchService } from 'src/app/services/search.service';
 import { DataRequestService } from 'src/app/services/data-request.service';
 import { ResponseItem } from 'src/@types/responseInterfaces';
 import { YouTubeApiService } from 'src/app/services/you-tube-api.service';
-import debounce from 'lodash/debounce';
+import { fromEvent, map, filter, debounce, interval, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, AfterViewInit {
+  @ViewChild('inputElement') inputElementRef?: ElementRef<HTMLInputElement>;
+
   @Output() settingClick = new EventEmitter<void>();
 
   comingCards: ResponseItem[] = [];
 
-  private _search$: any;
+  // private _search$: any;
 
   minlength = 3;
 
@@ -37,7 +47,27 @@ export class SearchComponent implements OnInit {
     this._searchService.search(this.comingCards);
   }
 
-  debouncedOnSubmit = debounce(this._onSubmit.bind(this), 800);
+  ngAfterViewInit(): void {
+    const inputElement = this.inputElementRef?.nativeElement;
+
+    if (inputElement) {
+      fromEvent(inputElement, 'input')
+        .pipe(
+          map((event: Event) => (event.target as HTMLInputElement).value),
+          filter((targetValue: string) => targetValue.length >= this.minlength),
+          debounce(() => interval(800)),
+          distinctUntilChanged(),
+        )
+        .subscribe({
+          next: (res) => {
+            console.log(res);
+            this._searchService.search(this.comingCards);
+          },
+        });
+    } else {
+      console.error('this.inputElementRef not exist');
+    }
+  }
 
   ngOnInit(): void {
     this._dataRequest.requestCards().subscribe({
@@ -48,19 +78,5 @@ export class SearchComponent implements OnInit {
         console.error('error', err);
       },
     });
-
-    // this._search$ = fromEvent(searchInput, 'input')
-    //   .pipe(
-    //     map((event: Event) => (event.target as HTMLInputElement).value),
-    //     filter((targetValue: string) => targetValue.length >= this.minlength),
-    //     debounce(() => interval(800)),
-    //     distinctUntilChanged(),
-    //   )
-    //   .subscribe({
-    //     next: (res) => {
-    //       console.log(res);
-    //       // this.onSubmit()
-    //     },
-    //   });
   }
 }
