@@ -6,45 +6,65 @@ import {
   ElementRef,
   ViewChild,
   AfterViewInit,
+  OnDestroy,
 } from '@angular/core';
 import { SearchService } from 'src/app/services/search.service';
 import { DataRequestService } from 'src/app/services/data-request.service';
 import { ResponseItem } from 'src/@types/responseInterfaces';
-import { YouTubeApiService } from 'src/app/services/you-tube-api.service';
-import { fromEvent, map, filter, debounce, interval, distinctUntilChanged } from 'rxjs';
+import {
+  fromEvent,
+  map,
+  filter,
+  debounce,
+  interval,
+  distinctUntilChanged,
+  Subscription,
+} from 'rxjs';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
 })
-export class SearchComponent implements OnInit, AfterViewInit {
-  @ViewChild('inputElement') inputElementRef?: ElementRef<HTMLInputElement>;
+export class SearchComponent implements OnInit, AfterViewInit, OnDestroy {
+  private _sub = new Subscription();
+
+  @ViewChild('inputElement') set inputElementRef(
+    elementRef: ElementRef<HTMLInputElement> | undefined,
+  ) {
+    const inputElement = elementRef?.nativeElement;
+
+    if (inputElement) {
+      const sub = fromEvent(inputElement, 'input')
+        .pipe(
+          map((event: Event) => (event.target as HTMLInputElement).value),
+          filter((targetValue: string) => targetValue.length >= this.minlength),
+          debounce(() => interval(800)),
+          distinctUntilChanged(),
+        )
+        .subscribe({
+          next: (res) => {
+            console.log(res);
+            this._searchService.search(this.comingCards);
+          },
+        });
+
+      this._sub.add(sub);
+    } else {
+      console.error('inputElementRef not exist');
+    }
+  }
 
   @Output() settingClick = new EventEmitter<void>();
 
   comingCards: ResponseItem[] = [];
 
-  // private _search$: any;
-
   minlength = 3;
 
-  constructor(
-    private _searchService: SearchService,
-    private _dataRequest: DataRequestService,
-    private _youTube: YouTubeApiService,
-  ) {}
+  constructor(private _searchService: SearchService, private _dataRequest: DataRequestService) {}
 
   onSettingClick() {
     this.settingClick.emit();
-  }
-
-  private _onSubmit(event: Event) {
-    console.log('onSubmit', event);
-    const Elem = event.target as HTMLInputElement;
-    this._searchService.value = (event.target as HTMLInputElement).value;
-    if (Elem.value.length <= 2) return;
-    this._searchService.search(this.comingCards);
   }
 
   ngAfterViewInit(): void {
@@ -78,5 +98,9 @@ export class SearchComponent implements OnInit, AfterViewInit {
         console.error('error', err);
       },
     });
+  }
+
+  ngOnDestroy(): void {
+    this._sub.unsubscribe();
   }
 }

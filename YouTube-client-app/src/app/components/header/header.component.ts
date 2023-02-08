@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   isSortingVisible: boolean = false;
 
-  constructor() {}
+  // constructor() {}
 
-  ngOnInit(): void {}
+  // ngOnInit(): void {}
 
   onSettingClick() {
     this.isSortingVisible = !this.isSortingVisible;
