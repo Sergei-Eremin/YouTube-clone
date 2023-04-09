@@ -17,8 +17,12 @@
 .info {
   margin-bottom: 20px;
   display: flex;
+  flex-wrap: wrap;
   & > div {
+    flex-grow: 0.5;
     display: flex;
+    align-items: center;
+    gap: 5px;
   }
 }
 .title {

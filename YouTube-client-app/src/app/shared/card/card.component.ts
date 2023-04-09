@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { EDateStatus } from './card.enums';
+import { EDateStatus } from 'src/@types/card.enums';
 
 @Component({
   selector: 'app-card',

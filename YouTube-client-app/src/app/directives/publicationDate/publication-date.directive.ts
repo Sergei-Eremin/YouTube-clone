@@ -1,17 +1,18 @@
-import { Directive, ElementRef, Input, OnInit } from '@angular/core';
+import { Directive, ElementRef, Input } from '@angular/core';
 import { differenceInWeeks } from 'date-fns';
-import { EDateStatus } from './card.enums';
+import { EDateStatus } from 'src/@types/card.enums';
 
 @Directive({
   selector: '[appPublicationDate]',
 })
-export class PublicationDateDirective implements OnInit {
+export class PublicationDateDirective {
   @Input() appPublicationDate!: string;
 
   constructor(private el: ElementRef) {}
 
   ngOnInit() {
     const diff = differenceInWeeks(new Date(), new Date(this.appPublicationDate));
+    console.log(diff, 'diff в директиве');
 
     if (diff < 1) {
       this.el.nativeElement.style.backgroundColor = EDateStatus.low;

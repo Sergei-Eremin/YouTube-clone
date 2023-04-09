@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { format } from 'date-fns';
 import { Observable, Subscription } from 'rxjs';
+import { EDateStatus } from 'src/@types/card.enums';
 
 @Component({
   templateUrl: './card-page.component.html',
@@ -25,6 +26,10 @@ export class CardPageComponent implements OnInit, OnDestroy {
   title: string = '';
 
   date: string = '';
+
+  publishDate: string = '';
+
+  bottomColor: EDateStatus = EDateStatus.high;
 
   private _sub = new Subscription();
 
@@ -52,8 +57,11 @@ export class CardPageComponent implements OnInit, OnDestroy {
           ${format(new Date(card?.snippet.publishedAt), 'dd')}
           ${format(new Date(card?.snippet.publishedAt), 'yyyy')}
         `;
+          console.log(card?.snippet.publishedAt, 'в стриме');
+          this.publishDate = card?.snippet.publishedAt;
         }),
     );
+    console.log(this.publishDate, 'publishDate после стрима');
   }
 
   ngOnDestroy(): void {
