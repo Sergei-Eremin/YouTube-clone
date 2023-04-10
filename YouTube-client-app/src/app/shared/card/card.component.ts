@@ -11,8 +11,7 @@ export class CardComponent implements OnInit {
 
   @Input() viewCount!: string;
 
-  /** date string */
-  @Input() publishDate!: string;
+  @Input() publishDate!: Date;
 
   @Input() likeCount!: string;
 

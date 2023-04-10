@@ -27,7 +27,7 @@ export class CardPageComponent implements OnInit, OnDestroy {
 
   date: string = '';
 
-  publishDate: string = '';
+  publishDate?: Date;
 
   bottomColor: EDateStatus = EDateStatus.high;
 
@@ -43,7 +43,7 @@ export class CardPageComponent implements OnInit, OnDestroy {
           if (!card) {
             return;
           }
-
+          const publishedAtDate = new Date(card?.snippet.publishedAt);
           this.viewCount = card?.statistics.viewCount;
           this.likeCount = card?.statistics.likeCount;
           this.dislikeCount = card?.statistics.dislikeCount;
@@ -52,13 +52,13 @@ export class CardPageComponent implements OnInit, OnDestroy {
           this.description = card?.snippet.description;
           this.title = card?.snippet.title;
           this.date = `
-          ${format(new Date(card?.snippet.publishedAt), 'iiii')},
-          ${format(new Date(card?.snippet.publishedAt), 'LLLL')}
-          ${format(new Date(card?.snippet.publishedAt), 'dd')}
-          ${format(new Date(card?.snippet.publishedAt), 'yyyy')}
+          ${format(publishedAtDate, 'iiii')},
+          ${format(publishedAtDate, 'LLLL')}
+          ${format(publishedAtDate, 'dd')}
+          ${format(publishedAtDate, 'yyyy')}
         `;
           console.log(card?.snippet.publishedAt, 'в стриме');
-          this.publishDate = card?.snippet.publishedAt;
+          this.publishDate = publishedAtDate;
         }),
     );
     console.log(this.publishDate, 'publishDate после стрима');

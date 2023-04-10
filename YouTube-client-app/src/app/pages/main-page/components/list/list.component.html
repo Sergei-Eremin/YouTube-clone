@@ -7,7 +7,7 @@
     [dislikeCount]="item.statistics.dislikeCount"
     [commentCount]="item.statistics.commentCount"
     [title]="item.snippet.title"
-    [publishDate]="item.snippet.publishedAt"
+    [publishDate]="toDate(item.snippet.publishedAt)"
     [id]="item.id"
   ></app-card>
 </div>

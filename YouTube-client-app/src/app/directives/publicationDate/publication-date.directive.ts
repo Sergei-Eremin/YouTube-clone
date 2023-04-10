@@ -6,12 +6,12 @@ import { EDateStatus } from 'src/@types/card.enums';
   selector: '[appPublicationDate]',
 })
 export class PublicationDateDirective {
-  @Input() appPublicationDate!: string;
+  @Input() appPublicationDate!: Date;
 
   constructor(private el: ElementRef) {}
 
   ngOnInit() {
-    const diff = differenceInWeeks(new Date(), new Date(this.appPublicationDate));
+    const diff = differenceInWeeks(new Date(), this.appPublicationDate);
     console.log(diff, 'diff в директиве');
 
     if (diff < 1) {
