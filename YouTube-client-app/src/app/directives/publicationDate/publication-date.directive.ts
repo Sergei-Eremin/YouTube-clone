@@ -12,7 +12,6 @@ export class PublicationDateDirective {
 
   ngOnInit() {
     const diff = differenceInWeeks(new Date(), this.appPublicationDate);
-    console.log(diff, 'diff в директиве');
 
     if (diff < 1) {
       this.el.nativeElement.style.backgroundColor = EDateStatus.low;

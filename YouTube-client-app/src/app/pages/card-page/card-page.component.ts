@@ -61,7 +61,6 @@ export class CardPageComponent implements OnInit, OnDestroy {
           this.publishDate = publishedAtDate;
         }),
     );
-    console.log(this.publishDate, 'publishDate после стрима');
   }
 
   ngOnDestroy(): void {

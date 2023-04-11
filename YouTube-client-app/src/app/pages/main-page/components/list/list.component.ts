@@ -13,7 +13,6 @@ export class ListComponent {
   // constructor() {}
 
   public toDate(str: string) {
-    console.log('%ctoDate', 'font-size:50px', str);
     return new Date(str);
   }
 }
