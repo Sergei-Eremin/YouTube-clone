@@ -26,7 +26,7 @@ import {
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
 })
-export class SearchComponent implements OnInit, AfterViewInit, OnDestroy {
+export class SearchComponent implements OnInit, OnDestroy {
   private _sub = new Subscription();
 
   @ViewChild('inputElement') set inputElementRef(
@@ -44,8 +44,11 @@ export class SearchComponent implements OnInit, AfterViewInit, OnDestroy {
         )
         .subscribe({
           next: (res) => {
-            console.log(res);
+            this._searchService.value = res;
             this._searchService.search(this.comingCards);
+          },
+          error: (error) => {
+            console.log(error, 'ошибка в событии');
           },
         });
 
@@ -67,35 +70,13 @@ export class SearchComponent implements OnInit, AfterViewInit, OnDestroy {
     this.settingClick.emit();
   }
 
-  ngAfterViewInit(): void {
-    const inputElement = this.inputElementRef?.nativeElement;
-
-    if (inputElement) {
-      fromEvent(inputElement, 'input')
-        .pipe(
-          map((event: Event) => (event.target as HTMLInputElement).value),
-          filter((targetValue: string) => targetValue.length >= this.minlength),
-          debounce(() => interval(800)),
-          distinctUntilChanged(),
-        )
-        .subscribe({
-          next: (res) => {
-            console.log(res);
-            this._searchService.search(this.comingCards);
-          },
-        });
-    } else {
-      console.error('this.inputElementRef not exist');
-    }
-  }
-
   ngOnInit(): void {
     this._dataRequest.requestCards().subscribe({
       next: (value) => {
         this.comingCards = value;
       },
       error: (err) => {
-        console.error('error', err);
+        console.error('error при запросе карточек requestCards', err);
       },
     });
   }
