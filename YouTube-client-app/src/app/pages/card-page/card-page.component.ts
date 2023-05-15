@@ -57,7 +57,6 @@ export class CardPageComponent implements OnInit, OnDestroy {
           ${format(publishedAtDate, 'dd')}
           ${format(publishedAtDate, 'yyyy')}
         `;
-          console.log(card?.snippet.publishedAt, 'в стриме');
           this.publishDate = publishedAtDate;
         }),
     );

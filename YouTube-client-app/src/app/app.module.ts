@@ -19,7 +19,6 @@ import { PublicationDateModule } from './directives/publicationDate/publication-
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     NotFoundModule,
     CardPageModule,
     MainPageModule,
@@ -31,6 +30,7 @@ import { PublicationDateModule } from './directives/publicationDate/publication-
     PublicationDateModule,
     AdminPageModule,
     // StoreModule.forRoot(),
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
