@@ -38,7 +38,7 @@ export class CardPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this._sub.add(
       this.route.params
-        .pipe(switchMap(({ id }) => this._dataRequest.requestCard(id)))
+        .pipe(switchMap(async ({ id }) => this._dataRequest.requestCard(id)))
         .subscribe((card) => {
           if (!card) {
             return;
@@ -46,7 +46,7 @@ export class CardPageComponent implements OnInit, OnDestroy {
           const publishedAtDate = new Date(card?.snippet.publishedAt);
           this.viewCount = card?.statistics.viewCount;
           this.likeCount = card?.statistics.likeCount;
-          this.dislikeCount = card?.statistics.dislikeCount;
+          // this.dislikeCount = card?.statistics.dislikeCount;
           this.commentCount = card?.statistics.commentCount;
           this.image = card?.snippet.thumbnails.high.url;
           this.description = card?.snippet.description;

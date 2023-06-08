@@ -16,7 +16,6 @@ export class LoginService {
   createToken(loginName: string) {
     localStorage.setItem('tokenName', loginName);
     this._token$.next(loginName);
-    // console.log(localStorage);
   }
 
   private _getToken(): string | null {

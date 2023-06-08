@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ResponseItem } from 'src/@types/responseInterfaces';
+import { IFinalItem, IYouTubeResponseItems } from 'src/@types/youTubeSearchResponse';
 
 @Component({
   selector: 'app-list',
@@ -8,7 +9,7 @@ import { ResponseItem } from 'src/@types/responseInterfaces';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListComponent {
-  @Input() items!: ResponseItem[];
+  @Input() items!: IFinalItem[];
 
   // constructor() {}
 

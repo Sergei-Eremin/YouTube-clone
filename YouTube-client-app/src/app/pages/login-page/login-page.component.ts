@@ -17,10 +17,11 @@ export class LoginPageComponent {
   constructor(private _login: LoginService, private _router: Router) {}
 
   login() {
-    console.log(this.loginForm);
     const form = this.loginForm;
-    if (form.valid && form.controls.login.value) {
-      this._login.createToken(form.controls.login.value);
+    const loginValue = form.controls.login.value;
+
+    if (form.valid && loginValue) {
+      this._login.createToken(loginValue);
       this._router.navigate(['main']);
     }
   }

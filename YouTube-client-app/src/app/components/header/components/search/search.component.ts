@@ -11,6 +11,7 @@ import {
 import { SearchService } from 'src/app/services/search.service';
 import { DataRequestService } from 'src/app/services/data-request.service';
 import { ResponseItem } from 'src/@types/responseInterfaces';
+import { IYouTubeSearchResponse, IYouTubeResponseItems } from 'src/@types/youTubeSearchResponse';
 import {
   fromEvent,
   map,
@@ -19,6 +20,7 @@ import {
   interval,
   distinctUntilChanged,
   Subscription,
+  switchMap,
 } from 'rxjs';
 
 @Component({
@@ -26,7 +28,7 @@ import {
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
 })
-export class SearchComponent implements OnInit, OnDestroy {
+export class SearchComponent implements OnDestroy {
   private _sub = new Subscription();
 
   @ViewChild('inputElement') set inputElementRef(
@@ -41,11 +43,14 @@ export class SearchComponent implements OnInit, OnDestroy {
           filter((targetValue: string) => targetValue.length >= this.minlength),
           debounce(() => interval(800)),
           distinctUntilChanged(),
+          switchMap((str) => {
+            this._searchService.value = str;
+            return this._dataRequest.requestYouTubeCards(str);
+          }),
         )
         .subscribe({
           next: (res) => {
-            this._searchService.value = res;
-            this._searchService.search(this.comingCards);
+            this._searchService.search(res);
           },
           error: (error) => {
             console.log(error, 'ошибка в событии');
@@ -60,25 +65,12 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   @Output() settingClick = new EventEmitter<void>();
 
-  comingCards: ResponseItem[] = [];
-
   minlength = 3;
 
   constructor(private _searchService: SearchService, private _dataRequest: DataRequestService) {}
 
   onSettingClick() {
     this.settingClick.emit();
-  }
-
-  ngOnInit(): void {
-    this._dataRequest.requestCards().subscribe({
-      next: (value) => {
-        this.comingCards = value;
-      },
-      error: (err) => {
-        console.error('error при запросе карточек requestCards', err);
-      },
-    });
   }
 
   ngOnDestroy(): void {

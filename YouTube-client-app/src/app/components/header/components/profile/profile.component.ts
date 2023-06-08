@@ -47,6 +47,5 @@ export class ProfileComponent /** implements OnInit */ {
 
   logOut() {
     this._login.deleteToken();
-    console.log(localStorage);
   }
 }
