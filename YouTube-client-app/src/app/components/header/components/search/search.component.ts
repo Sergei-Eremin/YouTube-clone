@@ -1,17 +1,6 @@
-import {
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-  ElementRef,
-  ViewChild,
-  AfterViewInit,
-  OnDestroy,
-} from '@angular/core';
+import { Component, EventEmitter, Output, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { SearchService } from 'src/app/services/search.service';
 import { DataRequestService } from 'src/app/services/data-request.service';
-import { ResponseItem } from 'src/@types/responseInterfaces';
-import { IYouTubeSearchResponse, IYouTubeResponseItems } from 'src/@types/youTubeSearchResponse';
 import {
   fromEvent,
   map,

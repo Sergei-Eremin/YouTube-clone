@@ -16,52 +16,31 @@ export class DataRequestService {
 
   constructor(private httpClient: HttpClient, private searchService: SearchService) {}
 
-  requestYouTubeCards(cardsName: string) {
+  requestCard(id: string) {
+    return this.searchService.cards.find((elem) => elem.id === id);
+  }
+
+  searchCardsName(cardsName: string) {
     return this.httpClient
       .get<IYouTubeSearchResponse>(
-        `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=${this.maxResults}&key=${this.apiKey}&q=${cardsName}`,
+        `https://youtube.googleapis.com/youtube/v3/search?part=snippet&key=${this.apiKey}&q=${cardsName}&maxResults=${this.maxResults}`,
       )
       .pipe(
         catchError((error) => {
           console.error(error, 'ошибка в запросе');
           return [];
         }),
-        switchMap((response: IYouTubeSearchResponse) => {
-          const arrID = response.items.map((elem) => elem.id.videoId).join(',');
-          return this.httpClient.get<IFinalResponse>(
-            `https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet&key=${this.apiKey}&id=${arrID}`,
-          );
-        }),
       );
   }
 
-  requestCard(id: string) {
-    return this.searchService.cards.find((elem) => elem.id === id);
+  requestYouTubeCards(str: string) {
+    return this.searchCardsName(str).pipe(
+      map((response) => response.items.map((el) => el.id.videoId).join(',')),
+      switchMap((string) =>
+        this.httpClient.get<IFinalResponse>(
+          `https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet&key=${this.apiKey}&id=${string}`,
+        ),
+      ),
+    );
   }
-
-  // searchCardsName(cardsName: string) {
-  //   return this.httpClient
-  //     .get<IYouTubeSearchResponse>(
-  //       `https://youtube.googleapis.com/youtube/v3/search?part=snippet&key=${this.apiKey}&q=${cardsName}&maxResults=${this.maxResults}`,
-  //     )
-  //     .pipe(
-  //       catchError((error) => {
-  //         console.error(error, 'ошибка в запросе');
-  //         return [];
-  //       }),
-  //     );
-  // }
-
-  // requestYouTubeCards(str: string) {
-  //   return this.searchCardsName(str).pipe(
-  //     map((response) => {
-  //       response.items.map((el) => el.id.videoId).join(',');
-  //     }),
-  //     switchMap((string) =>
-  //       this.httpClient.get<IFinalResponse>(
-  //         `https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet&key=${this.apiKey}&id=${string}`,
-  //       ),
-  //     ),
-  //   );
-  // }
 }

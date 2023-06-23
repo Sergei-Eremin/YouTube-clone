@@ -5,6 +5,7 @@ import { switchMap } from 'rxjs/operators';
 import { format } from 'date-fns';
 import { Observable, Subscription } from 'rxjs';
 import { EDateStatus } from 'src/@types/card.enums';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   templateUrl: './card-page.component.html',
@@ -27,18 +28,41 @@ export class CardPageComponent implements OnInit, OnDestroy {
 
   date: string = '';
 
+  videoLink: string = ``;
+
+  videoImage: string | undefined = ``;
+
   publishDate?: Date;
 
   bottomColor: EDateStatus = EDateStatus.high;
 
   private _sub = new Subscription();
 
-  constructor(private _dataRequest: DataRequestService, private route: ActivatedRoute) {}
+  constructor(
+    private _dataRequest: DataRequestService,
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer,
+  ) {}
+
+  safeUrl: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+    `https://www.youtube.com/embed/${this.videoLink}&origin=https://www.youtube.com`,
+  );
 
   ngOnInit(): void {
     this._sub.add(
       this.route.params
-        .pipe(switchMap(async ({ id }) => this._dataRequest.requestCard(id)))
+        .pipe(
+          switchMap(async ({ id }) => {
+            const CARD = this._dataRequest.requestCard(id);
+            this.videoLink = id;
+            this.videoImage =
+              CARD?.snippet.thumbnails.maxres?.url || CARD?.snippet.thumbnails.default?.url;
+
+            console.log(this.videoImage);
+
+            return this._dataRequest.requestCard(id);
+          }),
+        )
         .subscribe((card) => {
           if (!card) {
             return;
@@ -64,5 +88,30 @@ export class CardPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this._sub.unsubscribe();
+  }
+
+  createIframe() {
+    const iframe = document.createElement('iframe');
+    iframe.setAttribute('title', 'YouTube video player');
+    iframe.setAttribute('frameborder', '0');
+    iframe.setAttribute(
+      'allow',
+      'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share',
+    );
+    iframe.setAttribute('allowfullscreen', 'true');
+
+    return iframe;
+  }
+
+  onClickToVideo() {
+    const video = document.querySelector('.video') as HTMLElement;
+    video.innerHTML = '';
+    const iframe = this.createIframe();
+    video.append(iframe);
+    iframe.setAttribute('class', 'iframe');
+    iframe.setAttribute(
+      'src',
+      `https://www.youtube.com/embed/${this.videoLink}&origin=https://www.youtube.com`,
+    );
   }
 }

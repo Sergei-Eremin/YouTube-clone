@@ -19,6 +19,5 @@ export class SearchService {
   search(arrayCards: IFinalResponse) {
     const reg = new RegExp(this.value, 'gi');
     this.cards = arrayCards.items.filter((card) => card.snippet.title.match(reg));
-    console.log(this.cards);
   }
 }
