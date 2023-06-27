@@ -12,6 +12,8 @@ import { SearchService } from './search.service';
 export class DataRequestService {
   apiKey = 'AIzaSyB_rqIPT_MW81dumY4TJ7l-WOw1Ux7wnFE';
 
+  nextPageToken = '';
+
   maxResults = 12;
 
   constructor(private httpClient: HttpClient, private searchService: SearchService) {}
@@ -35,7 +37,39 @@ export class DataRequestService {
 
   requestYouTubeCards(str: string) {
     return this.searchCardsName(str).pipe(
-      map((response) => response.items.map((el) => el.id.videoId).join(',')),
+      map((response) => {
+        this.nextPageToken = response.nextPageToken;
+        return response.items.map((el) => el.id.videoId).join(',');
+      }),
+      switchMap((string) =>
+        this.httpClient.get<IFinalResponse>(
+          `https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet&key=${this.apiKey}&id=${string}`,
+        ),
+      ),
+    );
+  }
+
+  // next page
+
+  nextPageSearchCardsName(cardsName: string) {
+    return this.httpClient
+      .get<IYouTubeSearchResponse>(
+        `https://youtube.googleapis.com/youtube/v3/search?part=snippet&key=${this.apiKey}&q=${cardsName}&maxResults=${this.maxResults}&pageToken=${this.nextPageToken}`,
+      )
+      .pipe(
+        catchError((error) => {
+          console.error(error, 'ошибка в запросе');
+          return [];
+        }),
+      );
+  }
+
+  nextPageRequestYouTubeCards(str: string) {
+    return this.nextPageSearchCardsName(str).pipe(
+      map((response) => {
+        this.nextPageToken = response.nextPageToken;
+        return response.items.map((el) => el.id.videoId).join(',');
+      }),
       switchMap((string) =>
         this.httpClient.get<IFinalResponse>(
           `https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet&key=${this.apiKey}&id=${string}`,
