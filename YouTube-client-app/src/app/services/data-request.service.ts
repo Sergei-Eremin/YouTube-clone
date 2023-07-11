@@ -10,11 +10,11 @@ import { SearchService } from './search.service';
   providedIn: 'root',
 })
 export class DataRequestService {
-  apiKey = 'AIzaSyB_rqIPT_MW81dumY4TJ7l-WOw1Ux7wnFE';
+  private _apiKey = 'AIzaSyB_rqIPT_MW81dumY4TJ7l-WOw1Ux7wnFE';
 
   nextPageToken = '';
 
-  maxResults = 12;
+  private _maxResults = 12;
 
   constructor(private httpClient: HttpClient, private searchService: SearchService) {}
 
@@ -25,7 +25,7 @@ export class DataRequestService {
   searchCardsName(cardsName: string) {
     return this.httpClient
       .get<IYouTubeSearchResponse>(
-        `https://youtube.googleapis.com/youtube/v3/search?part=snippet&key=${this.apiKey}&q=${cardsName}&maxResults=${this.maxResults}`,
+        `https://youtube.googleapis.com/youtube/v3/search?part=snippet&key=${this._apiKey}&q=${cardsName}&maxResults=${this._maxResults}`,
       )
       .pipe(
         catchError((error) => {
@@ -43,7 +43,7 @@ export class DataRequestService {
       }),
       switchMap((string) =>
         this.httpClient.get<IFinalResponse>(
-          `https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet&key=${this.apiKey}&id=${string}`,
+          `https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet&key=${this._apiKey}&id=${string}`,
         ),
       ),
     );
@@ -54,7 +54,7 @@ export class DataRequestService {
   nextPageSearchCardsName(cardsName: string) {
     return this.httpClient
       .get<IYouTubeSearchResponse>(
-        `https://youtube.googleapis.com/youtube/v3/search?part=snippet&key=${this.apiKey}&q=${cardsName}&maxResults=${this.maxResults}&pageToken=${this.nextPageToken}`,
+        `https://youtube.googleapis.com/youtube/v3/search?part=snippet&key=${this._apiKey}&q=${cardsName}&maxResults=${this._maxResults}&pageToken=${this.nextPageToken}`,
       )
       .pipe(
         catchError((error) => {
@@ -72,7 +72,7 @@ export class DataRequestService {
       }),
       switchMap((string) =>
         this.httpClient.get<IFinalResponse>(
-          `https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet&key=${this.apiKey}&id=${string}`,
+          `https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet&key=${this._apiKey}&id=${string}`,
         ),
       ),
     );
