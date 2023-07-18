@@ -16,6 +16,6 @@ describe('DataRequestService', () => {
   });
 
   it('can load instance', () => {
-    expect(service).toBeDefined();
+    expect(service).toBeTruthy();
   });
 });
